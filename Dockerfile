@@ -1,6 +1,6 @@
 FROM php:8.2-apache
 
-# Install system dependencies and PostgreSQL drivers for Neon
+# Install system dependencies, PostgreSQL drivers, and Node.js
 RUN apt-get update && apt-get install -y \
     libpng-dev \
     libonig-dev \
@@ -9,6 +9,9 @@ RUN apt-get update && apt-get install -y \
     unzip \
     libpq-dev \
     libzip-dev \
+    curl \
+    && curl -fsSL https://deb.nodesource.com/setup_20.x | bash - \
+    && apt-get install -y nodejs \
     && docker-php-ext-install pdo pdo_pgsql mbstring pcntl bcmath gd zip
 
 # Enable Apache routing for Laravel
@@ -28,6 +31,10 @@ COPY . /var/www/html
 
 # Install Laravel dependencies
 RUN composer install --no-dev --optimize-autoloader
+
+# Install NPM dependencies and build Vite frontend assets
+RUN npm install
+RUN npm run build
 
 # Fix permissions so Laravel can write to storage
 RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache
