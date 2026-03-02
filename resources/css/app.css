@@ -1,0 +1,247 @@
+/* Import Bootstrap */
+@import "bootstrap";
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+/* --- THEME VARIABLES --- */
+:root {
+    --sidebar-width: 240px;
+
+    /* DEFAULT (DARK MODE) */
+    --bg-app: #0e1217;       
+    --bg-panel: #161b22;     
+    --bg-input: #0d1117;     
+    
+    --border-subtle: #30363d;
+    
+    --text-main: #c9d1d9;    /* Main Body Text */
+    --text-bright: #f0f6fc;  /* Headings/White */
+    --text-muted: #8b949e;   /* Secondary Text */
+    
+    --accent-primary: #0079F2; 
+    --accent-hover: #1c2333;   
+    --btn-bg: #21262d; 
+}
+
+/* --- LIGHT MODE OVERRIDES --- */
+[data-theme="light"] {
+    --bg-app: #f6f8fa;       
+    --bg-panel: #ffffff;     
+    --bg-input: #ffffff;     
+    
+    --border-subtle: #d0d7de; 
+    
+    --text-main: #24292f;    
+    --text-bright: #000000;  
+    --text-muted: #57606a;   
+    
+    --accent-primary: #0969da; 
+    --accent-hover: #f3f4f6;   
+    --btn-bg: #ffffff;
+}
+
+body {
+    background-color: var(--bg-app);
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    color: var(--text-main);
+    transition: background-color 0.3s ease, color 0.3s ease;
+    overflow-x: hidden;
+}
+
+/* --- BOOTSTRAP OVERRIDES (The Fix) --- */
+
+/* 1. Force all headings to use the Bright/White color by default */
+h1, h2, h3, h4, h5, h6,
+.h1, .h2, .h3, .h4, .h5, .h6 {
+    color: var(--text-bright); 
+}
+
+/* 2. Fix 'text-muted' so it uses OUR variable, not Bootstrap's dark gray */
+.text-muted {
+    color: var(--text-muted) !important;
+}
+
+/* 3. Fix 'text-body' and other common utilities */
+.text-body {
+    color: var(--text-main) !important;
+}
+
+/* 4. Fix Cards */
+.card {
+    --bs-card-bg: var(--bg-panel);
+    background-color: var(--bs-card-bg) !important; 
+    border: 1px solid var(--border-subtle) !important;
+    color: var(--text-main);
+}
+
+/* --- LAYOUT & COMPONENTS --- */
+.main-content {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+}
+
+.sidebar {
+    width: var(--sidebar-width);
+    background-color: var(--bg-panel);
+    border-right: 1px solid var(--border-subtle);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    transition: margin 0.3s ease-in-out;
+    z-index: 1040;
+}
+
+.nav-link {
+    color: var(--text-muted) !important;
+    font-size: 0.9rem;
+    font-weight: 500;
+    border-radius: 6px;
+    margin-bottom: 4px;
+    padding: 10px 14px;
+}
+
+.nav-link:hover {
+    background-color: var(--accent-hover);
+    color: var(--text-bright) !important;
+}
+
+.nav-link.active {
+    background-color: rgba(0, 121, 242, 0.15) !important; 
+    color: var(--accent-primary) !important;
+    border: 1px solid rgba(0, 121, 242, 0.2);
+}
+
+.glass-header {
+    background-color: var(--bg-panel);
+    border-bottom: 1px solid var(--border-subtle);
+}
+
+.header-title {
+    color: var(--text-bright);
+}
+
+.app-footer {
+    background-color: var(--bg-panel);
+    border-top: 1px solid var(--border-subtle);
+    color: var(--text-muted);
+}
+
+.btn-light {
+    background-color: var(--btn-bg);
+    border: 1px solid var(--border-subtle);
+    color: var(--text-main);
+}
+.btn-light:hover {
+    background-color: var(--accent-hover);
+    color: var(--accent-primary);
+    border-color: var(--accent-primary);
+}
+
+/* Custom Theme Utilities */
+.text-theme-bright { color: var(--text-bright) !important; }
+.text-theme-muted { color: var(--text-muted) !important; }
+
+@media (max-width: 768px) {
+    .sidebar {
+        position: fixed;
+        margin-left: calc(-1 * var(--sidebar-width));
+        box-shadow: 10px 0 30px rgba(0,0,0,0.5);
+    }
+    .sidebar.show {
+        margin-left: 0;
+    }
+}
+
+/* 1. Dark Input Fields (Search & Select) */
+.form-control, .form-select, .input-group-text {
+    background-color: var(--bg-input) !important;
+    border: 1px solid var(--border-subtle) !important;
+    color: var(--text-bright) !important;
+}
+
+.form-control:focus, .form-select:focus {
+    border-color: var(--accent-primary) !important;
+    box-shadow: 0 0 0 2px rgba(0, 121, 242, 0.25) !important;
+    background-color: var(--bg-input) !important;
+}
+
+.input-group-text {
+    border-right: none !important; /* Seamless search bar */
+}
+
+/* 2. Replit Style Table */
+.table {
+    --bs-table-bg: transparent;
+    --bs-table-color: var(--text-main);
+    --bs-table-border-color: var(--border-subtle);
+}
+
+.table thead th {
+    background-color: var(--bg-panel); /* Match card background */
+    border-bottom: 1px solid var(--border-subtle);
+    color: var(--text-muted);
+}
+
+.table-hover tbody tr:hover {
+    background-color: rgba(255, 255, 255, 0.03) !important; /* Extremely subtle hover */
+}
+
+/* 3. Utility Classes used in Blade */
+.text-accent { color: var(--accent-primary) !important; }
+.text-bright { color: var(--text-bright) !important; }
+
+.bg-accent-subtle { background-color: rgba(0, 121, 242, 0.15) !important; }
+.bg-warning-subtle { background-color: rgba(255, 193, 7, 0.15) !important; }
+.bg-success-subtle { background-color: rgba(25, 135, 84, 0.15) !important; }
+
+.bg-panel { background-color: var(--bg-panel) !important; }
+.border-subtle { border-color: var(--border-subtle) !important; }
+
+/* 4. Action Buttons (Eye, Pen, Trash) */
+.btn-icon {
+    color: var(--text-muted);
+    border: none;
+    background: transparent;
+    transition: color 0.2s;
+}
+.btn-icon:hover {
+    color: var(--text-bright);
+    background-color: var(--bg-input);
+}
+
+/* 5. Pagination */
+.page-link {
+    background-color: var(--bg-input);
+    border-color: var(--border-subtle);
+    color: var(--text-main);
+}
+.page-link:hover {
+    background-color: var(--bg-panel);
+    border-color: var(--border-subtle);
+    color: var(--text-bright);
+}
+.page-item.active .page-link {
+    background-color: var(--accent-primary);
+    border-color: var(--accent-primary);
+}
+.page-item.disabled .page-link {
+    background-color: var(--bg-app);
+    border-color: var(--border-subtle);
+    color: var(--text-muted);
+}
+
+::placeholder {
+    /* 1. Use the theme-aware variable so it switches automatically */
+    color: var(--text-muted) !important;
+    
+    /* 2. Fix Firefox default opacity (it makes placeholders faint by default) */
+    opacity: 1; 
+}
+
+/* Optional: Make placeholder slightly brighter when you click the search bar */
+.form-control:focus::placeholder {
+    color: var(--text-main) !important;
+    opacity: 0.7;
+}
