@@ -8,7 +8,8 @@ RUN apt-get update && apt-get install -y \
     zip \
     unzip \
     libpq-dev \
-    && docker-php-ext-install pdo pdo_pgsql mbstring pcntl bcmath gd
+    libzip-dev \
+    && docker-php-ext-install pdo pdo_pgsql mbstring pcntl bcmath gd zip
 
 # Enable Apache routing for Laravel
 RUN a2enmod rewrite
